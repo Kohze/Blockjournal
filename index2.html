@@ -1,0 +1,452 @@
+
+<html>
+<head>
+<meta name="viewport" content="width=device-width">
+<meta property="og:url" content="https://bitstagram.bitdb.network" />
+<meta property="og:type"   content="website" />
+<meta property="og:title" content="Bitstagram" />
+<meta property="og:description" content="A Bitcoin Native Photo App" />
+<meta property="og:image" content="https://bitstagram.bitdb.network/bitstagram.png" />
+
+<link href="https://fonts.googleapis.com/css?family=Oleo+Script" rel="stylesheet">
+<script src="https://www.moneybutton.com/moneybutton.js"></script>
+<script src='https://unpkg.com/datapay'></script>
+<script src='https://unpkg.com/databutton'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/browser-image-compression@1.0.0/dist/browser-image-compression.js"></script>
+<style>
+body {
+  margin: 0;
+  text-align: center;
+}
+#frame {
+  max-width: 500px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+#button {
+  padding: 10px;
+  text-align: center;
+  margin: 20px auto;
+  background: whitesmoke;
+  border-radius: 100px;
+}
+#button:empty {
+  margin: 0px auto;
+  padding: 0;
+}
+#button img {
+  height: 50px;
+  width: 50px;
+  display: inline;
+}
+img {
+  width: 100%;
+  display: block;
+}
+h2 {
+  display: inline-block;
+  margin: 0;
+  font-family: 'Oleo Script', cursive;
+  letter-spacing: -1px;
+}
+h1 {
+  margin: 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  padding: 5px;
+  font-family: 'Oleo Script', cursive;
+  letter-spacing: -1px;
+}
+h1 a {
+  text-decoration: none;
+  color: black;
+}
+.container {
+  border-top: 1px solid rgba(0,0,0,0.05);
+  flex-grow: 1;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.footer img {
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+  padding: 10px 15px;
+  opacity: 0.3;
+  cursor: pointer;
+}
+.header {
+  font-size: 12px;
+  padding: 2px 5px;
+  font-weight: bold;
+  background: black;
+  color: white;
+  font-family: "Helvetica Neue", helvetica, arial;
+  text-align: left;
+}
+.selected {
+  opacity: 1 !important;
+}
+.item {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 2px;
+}
+.item_row {
+  display: flex;
+  padding-top: 10px;
+}
+a.like {
+  cursor: pointer;
+}
+.like img {
+  width: 20px;
+  height: 20px;
+}
+.item a {
+  display: inline-block;
+  padding: 5px;
+  /*
+  text-decoration: none;
+  */
+  color: cornflowerblue;
+  font-size: 12px;
+  font-family: "Helvetica Neue", helvetica, arial;
+}
+.fileContainer {
+  opacity: 0.3;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  padding: 10 15px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: 30px 30px;
+  background-position: center;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGLSURBVGhD7Zm9LgVBGIaXQiFCKwpBhErlAnARIsRfQ+sqSGjoFEp/iVJ0SkqJyjVIFP4rifC8k5zkRM7sjjPLTPE9yVN8e2Ym856ze7KTrzAMo22W8QY/8Cuxz3iK4/grDrCxyCc+JvQVG3t5wxkMYgk16QVXsAdTM4QnqH3dYy9WottJE1ZdlQ+deI3a25oulNGBeiZ0O+XwS/xkAxVk31Ul9KEG6uHKkQXU/o5dVYIF+SeSBenCERxwVTzJgkyg1rtyVTwWJBYL4sGCxGJBPFiQWCyIh1qD6LVjMtA51Hq3TdeqHEUftQYZRI35Ky/QR61B+lGnyBDvUOvprN3q81buoQ97RmKxIB4sSCwWxIMFicWCeLAgsQzjJe66Kp5kQerGguRGcJBu1MB3V+XHImp/h66q4Ak1WO2u3NhC7W3bVRWoe6rBR6h2Vy7oi1VzVHub1oUqxlAnOk1Qz07trtmEzuMmNkKcYzBK/ICamJM6zwd1dJtRM3Qd1Xg8S6j+oXZwCg3DaIui+AazIoYIcRdsNgAAAABJRU5ErkJggg==");
+}
+
+.fileContainer [type=file] {
+  cursor: inherit;
+  display: block;
+  font-size: 999px;
+  filter: alpha(opacity=0);
+  min-height: 100%;
+  min-width: 100%;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  text-align: right;
+  top: 0;
+}
+.flex {
+  flex-grow: 1;
+}
+.hidden {
+  display: none;
+}
+.addr {
+  font-family: Menlo, monaco, Courier;
+  font-size: 12px;
+  padding-bottom: 20px;
+}
+#qr canvas {
+}
+.tips {
+  border-top: 1px solid rgba(0,0,0,0.1);
+  margin-top: 10px;
+  padding-top: 10px;
+}
+.tips .line {
+  display: block;
+  text-align: left;
+  font-size: 12px;
+  font-family: arial;
+  padding: 5px;
+  color: rgba(0,0,0,0.8);
+}
+.tips .line img {
+  display: inline;
+  width: 15px;
+  height: 15px;
+  vertical-align: text-bottom;
+}
+</style>
+<script>
+var h = null
+if(window.location.hash) {
+  h = window.location.hash.slice(1)
+}
+console.log("h is ", h);
+var n = {
+  "$nin": [
+    "290238492394",
+    "120391203092190"  ]
+}
+var query = {
+  v: 3,
+  q: {
+    find: {
+      "tx.h": n
+    },
+    /*
+    sort: {
+      "blk.i": -1
+    },3Ω
+    */
+    limit: 200
+  },
+  r: {
+    f: "[ .[] | {h: .tx.h, in: .in, blk: .blk} ]"
+  }
+};
+var mode = "raw"
+var hash = null
+if (h) {
+  var items = h.split('_')
+  mode = items[0]
+  if (items.length === 2) {
+    query.q.find["tx.h"] = items[1]
+    delete query.q.skip
+    delete query.q.limit
+  }
+}
+var b64 = btoa(JSON.stringify(query));
+console.log(b64);
+var url = "https://lol.bitdb.network/q/1BvPxwDoz6DR9qedZrKJjWio6Gm7UCPGXU/" + b64;
+//var url = "https://chronos.bitdb.network/q/1P6o45vqLdo6X8HRCZk8XuDsniURmXqiXo/" + b64;
+console.log(url);
+var header = {
+  headers: { key: "1KJPjd3p8khnWZTkjhDYnywLB2yE1w5BmU" }
+};
+console.log("query = ", query)
+
+
+document.addEventListener("DOMContentLoaded", function(e) {
+  document.querySelector(".header").innerHTML = mode
+  document.querySelector("img." + mode).classList.add("selected")
+  fetch(url, header).then(function(r) {
+    return r.json()
+  }).then(function(r) {
+    let res = r.u.concat(r.c)
+    console.log(r)
+    //let res = r.t
+    let modes = ['raw', 'sepia', 'pixel', 'blur']
+    let html = res.map(function(re) {
+      let like = '<a class="like"><img class="like" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJ7SURBVGhD7Zg9a1RREIYH1MJGBSGFipVgo4UkxI/dTYSIH9jYWIudf8HSRrQJktrCHyFoI+oiBISwaheIiIUgi/iBjRae6zM3Ywg6m3t2996cFc4DL3uzd87Me+Z+nD2RTCaTyWRiCXPSCR1ZRL3Qlo98/kJ9jrt83grzcsRCB6IxZez6mH6ZYz1XDy1y3LLQ+ghnZKboyDNUbCU1U7TlQTgtUzZ0gzArezB3v4xxxm4WMU/JM21Dx4Oi19EPr9AgYeCDTtpSlA3gu7de7CBpTcZcsxSjoea95FFqy1duuePohB67MREaeRIMnEU/vaSx0q6rvHOxUg+br2Y0DHzhJUwh7oSu2YqjaMlZL1FK0dA5s1cNwUtekpTiKtwze9UQ/MZLklI0tWf2qiG47yVJKfVk9qoheKy3TxPSdcHsVcME3ntJUooJvDN71RD80EuSUurJ7FXDFbjhJUkp9WT2qinOyV4GfPYSpRDd/6KezF4cTOCmlyyF1IvZiqeYl53M/KWXcDuFh5ViWnaZreGwzUeyNUFrx2yStoQOnCTRN69Ak6Lud61tNsajnIQ+SE6hRqR7ibq3lvwmP8qVWHUL1ihqrHHbHLOy9cKDvY/OPPYK1yFyPwkLst/KNUNxVXZQ7A6dCn8bGFWaCy3pm8/KNA8FL9OxT56hYVQ+W225Ymm3F+7VQxjoesZiRBOW2f0dtnRpsAXvNmYq/9/zR3bL3B15gWoCDJ1HlYuexoSWXLJhkwWv2gMYfOUZV3HudTglBy18MrFX7fN/zOuzwjkLm2zo8m4Mb6wXdP6Rfmen/w9sT7GGVof+LT8pcBUuMoEL9mcmk8lkMjUj8hve1EnqIT28ygAAAABJRU5ErkJggg=="></a>';
+      let tips = ""
+      if (h) {
+        let aaa = re.in[0].e.a
+        if (re.blk) {
+          let qq = {
+            "v": 3,
+            "q": {
+              "find": {
+                "out.e.a": re.in[0].e.a,
+                "blk.i": {
+                  "$gt": re.blk.i
+                }
+              }
+            }
+          }
+          console.log("qq = ", qq)
+          let b64 = btoa(JSON.stringify(qq));
+          let u = "https://euler.bitdb.network/q/13Q2RdxNQRYaPotZxJ64yZbWuHrpVwut1Z/" + b64
+          fetch(u, header).then(function(rrr) {
+            return rrr.json()
+          }).then(function(rrr) {
+            let k = rrr.u.concat(rrr.c).map(function(item) {
+              // find the output 
+              let receiver = item.out.filter(function(o) {
+                return o.e.a === aaa
+              })[0]
+              return {tx: item.tx.h, sender: item.in[0].e.a, receiver: receiver.e.v}
+              //return {tx: item.tx.h, sender: item.in[0].e.a, receiver: item.out[0].e.v}
+            })
+            console.log("rrr = ",k) 
+            let lines = k.map(function(item) {
+              return "<div class='line' target='_blank' href='https://graph.bitdb.network/#tx/" + item.tx + "'><img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJ7SURBVGhD7Zg9a1RREIYH1MJGBSGFipVgo4UkxI/dTYSIH9jYWIudf8HSRrQJktrCHyFoI+oiBISwaheIiIUgi/iBjRae6zM3Ywg6m3t2996cFc4DL3uzd87Me+Z+nD2RTCaTyWRiCXPSCR1ZRL3Qlo98/kJ9jrt83grzcsRCB6IxZez6mH6ZYz1XDy1y3LLQ+ghnZKboyDNUbCU1U7TlQTgtUzZ0gzArezB3v4xxxm4WMU/JM21Dx4Oi19EPr9AgYeCDTtpSlA3gu7de7CBpTcZcsxSjoea95FFqy1duuePohB67MREaeRIMnEU/vaSx0q6rvHOxUg+br2Y0DHzhJUwh7oSu2YqjaMlZL1FK0dA5s1cNwUtekpTiKtwze9UQ/MZLklI0tWf2qiG47yVJKfVk9qoheKy3TxPSdcHsVcME3ntJUooJvDN71RD80EuSUurJ7FXDFbjhJUkp9WT2qinOyV4GfPYSpRDd/6KezF4cTOCmlyyF1IvZiqeYl53M/KWXcDuFh5ViWnaZreGwzUeyNUFrx2yStoQOnCTRN69Ak6Lud61tNsajnIQ+SE6hRqR7ibq3lvwmP8qVWHUL1ihqrHHbHLOy9cKDvY/OPPYK1yFyPwkLst/KNUNxVXZQ7A6dCn8bGFWaCy3pm8/KNA8FL9OxT56hYVQ+W225Ymm3F+7VQxjoesZiRBOW2f0dtnRpsAXvNmYq/9/zR3bL3B15gWoCDJ1HlYuexoSWXLJhkwWv2gMYfOUZV3HudTglBy18MrFX7fN/zOuzwjkLm2zo8m4Mb6wXdP6Rfmen/w9sT7GGVof+LT8pcBUuMoEL9mcmk8lkMjUj8hve1EnqIT28ygAAAABJRU5ErkJggg=='> <a target='_blank' href='https://graph.bitdb.network/#tx/" + item.tx + "'>" + item.sender + " tipped <span class='amount' data-amount=" + item.receiver + ">" + item.receiver + " sats.</a></div>"
+            }).join("")
+            document.querySelector(".item[data-addr='"+re.in[0].e.a+"'] .tips").innerHTML = lines
+            fetch("https://api.cryptonator.com/api/ticker/bsv-usd").then(function(_r) {
+              return _r.json()
+            }).then(function(_r) {
+              console.log(_r)
+              let rate = parseFloat(_r.ticker.price)
+              document.querySelectorAll(".line .amount").forEach(function(item) {
+                let v = Math.floor(parseInt(item.dataset.amount) * 0.00000001 * rate * 1000)/1000
+                let converted = " (" + v + " USD)"
+                item.innerHTML = item.innerHTML + converted
+              })
+            })
+          })
+        }
+      }
+      let btns = modes.map(function(m) {
+        return "<a class='permalink' href='#" + m + '_' + re.h + "'>" + m + "</a>"
+      }).join("")
+      return "<div class='item' data-addr='" + re.in[0].e.a + "'>" +
+        "<a class='permalink' href='#raw_" + re.h + "'>" + 
+        "<img onerror='this.style.height=0' src='https://lol.bitdb.network/assets/1BvPxwDoz6DR9qedZrKJjWio6Gm7UCPGXU/" + mode + "/" + re.h + "'>" +
+        "</a>" +
+        "<div class='item_row'>" + like + "<div class='flex'></div>" + btns + "</div>" +
+        "<div class='tips'></div>" + 
+        "</div>"
+    }).join("")
+    let container = document.querySelector(".container .items")
+    container.innerHTML = html
+  })
+  document.querySelector(".items").addEventListener("click", function(e) {
+    console.log("target = ", e.target)
+    if (e.target.classList.contains("like")) {
+      console.log("Yes")
+      let addr = e.target.closest(".item").dataset.addr
+      console.log("addr = ", addr)
+      var btn = document.querySelector("#button")
+      var btn2 = document.createElement("div")
+      btn2.id = 'button'
+      btn2.className = 'hidden'
+      btn.replaceWith(btn2);
+      moneyButton.render(document.querySelector("#button"), {
+        to: addr,
+        amount: "0.1",
+        currency: "USD",
+        editable: true,
+        label: "Tip",
+        type: "tip",
+        onPayment: function(msg) {
+          console.log(msg)
+          var btn = document.querySelector("#button")
+          var btn2 = document.createElement("div")
+          btn2.id = 'button'
+          btn.replaceWith(btn2);
+          document.querySelector("#qr canvas").classList.add("hidden")
+          document.querySelector("#qr .addr").classList.add("hidden")
+        }
+      })
+      
+    }
+  })
+  document.querySelector(".footer").addEventListener("click", function(e) {
+    console.log(e.target)
+    if (e.target.id === 'file') {
+    } else {
+      let mode = e.target.classList[0]
+      console.log(mode)
+      location.href = location.protocol + "//" + location.host + "#" + mode
+      location.reload()
+    }
+  })
+
+
+
+
+  var buttonEl = document.querySelector("#button")
+  var fileEl = document.querySelector("#file")
+  fileEl.onchange = function(e) {
+    var btn = document.querySelector("#button")
+
+    var btn2 = document.createElement("div")
+    btn2.id = 'button'
+    btn.replaceWith(btn2);
+
+    var type = e.target.files[0].type
+    var name = e.target.files[0].name
+    var file = e.target.files[0]
+    buttonEl.innerHTML = "<img src='./loading.gif'>"
+    var options = {
+      maxSizeMB: 0.09,
+      maxWidthOrHeight: 800,
+      useWebWorker: true
+    }
+    try {
+      imageCompression(file, options).then(function(compressedFile) {
+        console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+        console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+        var reader = new FileReader();
+        reader.addEventListener('load', function(event) {
+          var file = event.target.result
+          console.log("type = ", type)
+          console.log("name = ", name)
+          console.log("file = ", file)
+          databutton.build({
+            data: [
+              "19HxigV4QyBv3tHpQVcUEQyq1pzZVdoAut",
+              file,
+              type,
+              "binary",
+              name
+            ],
+            button: {
+              $el: "#button",
+              onPayment: function(msg) {
+                console.log(msg)
+                var current_query = {
+                  v: 3,
+                  q: {
+                    find: { "tx.h": msg.txid },
+                    limit: 1
+                  }
+                };
+                var b64 = btoa(JSON.stringify(current_query))
+                //var current_url = 'https://babel.bitdb.network/s/1DHDifPvtPgKFPZMRSxmVHhiPvFmxZwbfh/'+b64
+                var current_url = 'https://babel.bitdb.network/s/1DHDifPvtPgKFPZMRSxmVHhiPvFmxZwbfh/'+b64
+                var bitsocket = new EventSource(current_url)
+                bitsocket.onmessage = function(ee) {
+                  var m = JSON.parse(ee.data)
+                  console.log("m = ", m)
+                  if (m.type === 'u') {
+                    let tx = m.data[0].tx.h
+                    location.href = location.protocol + "//" + location.host + "#" + mode + "_" + tx
+                    location.reload()
+                  }
+                }
+              }
+            } 
+          })
+          setTimeout(function() {
+            document.querySelector("#button img").remove()
+            window.scrollY += 1 
+          }, 1000)
+        });
+        reader.readAsArrayBuffer(compressedFile)
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+})
+</script>
+</head>
+<body>
+<div id='frame'>
+  <h1><a href='/'>bitstagram</a></h1>
+  <div id='button'></div>
+  <div id='qr'>
+    <canvas class='hidden'></canvas>
+    <div class='addr'></div>
+  </div>
+  <div class='container'>
+    <div class='header'>header</div>
+    <div class='items'></div>
+  </div>
+  <div class='footer'>
+    <img class='raw' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAM7SURBVGhD7dlpqExhHMfxa9/XRJItKSRLXtiTF5KUJeEFkfBG8ULCG0oRUpRkKSUhSyFFyZZIWYqQsiVbItmzr9/f1TM9xv8+c2bmnjNz6/zq8+LOPPPM+Z97zvP8Z6YiTbRMwlMcQ0c9UNPSErvw2/MW01FjMgqP4RfhO4g2KNs0xkb8glWA7znGoewyEHdgHXTIdjRHyVMPK/Ed1oHKZbzJesz3ECNQsvTGVVgHJ1+wBLWhFesUrHHyE+vREIlFB7YIn2EdlNxAX/iphQX4BOs1cgsDEHu64hysgxCd2bVoAKUHLmEN3GM9cQXW6+UblqMuYslcvIf15vIAw6Ho7M+Hf/avow8UHeQKhO4tnQCdiGpLexyF9WaOVp9mUHQ/nIQ1TvfNYujyVLTa3YY1VnQidDnqxBSVyXgJ603kBfz9YBpewxrrOw9dpor2n00I7T+n0Ql5pxV2w5rUOYy2UFrjAKxxVdFlOhsu6gjUl1ljRS3OTEROrgnfYRZcxuAZrLFRHEE7KDqBe2GNcw7BnUAz+hdvRuhffBZdoDTBFkRpSXLRJToBLlPxCtZY0fjx+C+DcBfWi0Q3qfYOd5MOxj1YY4uxA65l6YDjsMY5Gu8Wmcro+rMGyjVoF1fUkqxCaNkslt+yaLWah4+wxor2rUysAT+wGvWh9EKoJalO2ljXwbUs3XER1ljdDplkP3kfQ6HoclqIUEsSl5voB0Wb6DJo5/fHVFnINjSF0hln4D+ftK9YijpQ1IupJ3PP/1OIPktoCR1b+dffaM3WUutPWkoX0A1KI2yALkEtQpmooXNNnW5ordXWZKX2AVPgEvxQ1gLWJOViDyIlLcSgBlIrjzbP7NWmUIkVopZlH9Si++23duAZKLYjSKQQ7cD6djEUrTgq1Hp9FIkU4q8ooWhPOAFrjlxiL0SfT/KJNls1o9ZcIbEXMhL5Zj+suUJiLURn1rUQ+WQOrPlCYi3kCQrJaFjzhcRayCMUkmGw5gtJC4kiLQTWfCFpIVGkhcCaLyQtJIq0EFjzhaSFRFGWhehbeWuCEH18LSRDYM0XshORo5+79I1jVBNRSPRdmn4otea0bEV/pEmTTCoq/gAHqsfotALLVwAAAABJRU5ErkJggg==">
+    <img class='sepia' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAKpSURBVGhD7dlLqA5hHMfx1yWSW+QSyXUjCwuSklzChrIQJcSGpJSNs7CwoiyEndhgo8SKXCOyICtJyi13ZSO55LJw+36n89Sc13vOeb3zzIyT+dVn8TxT/3n/73ln5pnn1KpUqdJSemEqFmJxTmZhIKJnNV7iVwG+YC/6I0o2IxS/g1M4GclrWPc7buAKPrfPXUAfZMooWNATrHAiYsbD2u8x24n2TMJD2MQGJ7JkEyx0JBnFzS5Ye0cy6pil8Ni5ZJQh4SRbk1HcHIe1FyWjjhkBjz1KRhmyBxbakoziJjQwNxl1zFB47EUyypAiGjiNw3WOosc00JXbyJQiGtiJVZ2YiEwp6xqIlq4aOIDLTbiEeahP6Q08h8easR0hPl29dd6Fx0prYAgmN8EnrgtB4xP3DUJjH+Hx3BL7GliOHwgNPMZw5JauGriOd53Yjc4yAW34BmsX8hO6iTUYjJBWGzA2YF0XcmOcyCu+vLg+92R6i5HImrBE/wr/IrllHX4iNHALg2BauYjTOQtrFvIT8uVjmhOpvEJorDvp22hI6c+B/Wj04Kr3zz7Isqb0Bqaj0QJsJZq5s5TewAd4rBHX+N2l9AZ84T6E+peRg2jmQ1XXQDPJq4FxuIoe1cBo+JNzAWfNwJtBbonZwEakP7jc6euH3BKzgb5YC3ccniI0kd6VazlupB5D/VP0GTzJ/dTc33B/cwEa5QSsHeUamIPwjcTmbbVRot6FLGIxv7GZkWxD4Q1YNFaWobAG/MYs5r05VubDmmeS0Z+5Bo/PSEYZMwDu1cv9+RjxxecTXDONdSKVKfBtzPN57ijZB7+RB3B/3lfHYRmF2/A9LIGrVH9abps777+SosUHykVYuAjnEf0h1hvrYXH/Ek8is6a1PYfnqlKlyv+XWu03IzKTMlfQCp4AAAAASUVORK5CYII=">
+    <div class='fileContainer'>
+      <input type="file" accept="image/*" id="file">
+    </div>
+    <img class='pixel' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJkSURBVGhD7Zk/axRBGIevEFEbLRQUQUQtJCD4D2wEFYIIIihECFoqgmCliKJoSIKYJhARBD+AjbVdyjQWVvYp/Axirc8rLPx42bsZj7vb2fF94CmSmd3b3827O7NzgyAIgiAIUuzDY2O4B3vJc/w9htexl0TgTHsT2N+zL3A7w5/Yy8B+RN9iDp9Qj4vApVJ94AN4TnyJ38RHaBxG7WfHKb0J/BD1QoeNqP1f+9lxSgTGIqk+8EGcF5/ipngPjaOo/VZR+91ApdjAd1Av7AO24Z/W9vcoqg98ErUC3qFWwAUsgkkFtuO03c5bBIfwtvgEP4v30TiO2u8Var+bqBQb2O4lvTC719rIfVo3VB/4FGoFWLtWwEUsgkkFTs3DE2MnPhjhAio2z2q7zbMfxWaePYHaz9bQ2u8WKjMLvBf1g7zfUbHS0vYv2Ebu07qh+sCnUStgGbUCLuFU6Cpwah6eGj6w7R3pN72BOhKPUdub99kjqP0sgPbz00oxgX+gYtOFtm9hG7lP64bqA5/BZ+ISromXcSbMKnBqHp4Zu1C/aV9auYHt7UbPs4hKMYFT5AZOUX3gOdR79jVqBVzDIhk38L+utDrDfvvRkXiDOlJ3MYfeBLYFhF6oX2nlUl1g23XUSvCuoFbGVSyS3MB+Te1NrbQ6Yzfqmvc96prYvw839DZwaqU1jOoD2w6GVsI6aiV4bcWm/f3bUmfkBvYjmpqPi31KR2Bso9rAv1D3gxvtgnXf+AoqZ1H7f0U9b7GBh5kaUf8+7I3AXfHfBd6B+jvsMM/jKPZj23GNtiMSBEEQBH8ZDP4AfdM+K0qfZ5AAAAAASUVORK5CYII=">
+    <img class='blur' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAL0SURBVGhD7dtLqE1RHMfx600ooRh4FaLklTAgKRJJKUrJwKMM6IqZSCaSkomICVEMDAkDZIIMUcq7PCcMCCHv729w69/qfzqvvdZ+dH71mdx9av9X+5y11+t2ddJJpumDU/iG6xiJSucA/hlX0AuVzGL8hm2w7ETlMhxvETZWfmAmKpWz8Brb4x76ohJZAa+RoT0ofYbiFbwGhvTVnopS5zi8xtVyB6XttWfB65Xr2YjSRU/pLrwG1fMew1Cq6Cl5jWnUUZQmejp6Sl5DGqWfgn4SpchheI1o1g0UPuPwHV4DWrEchc4ZeIW36gF6o5CZgT/wCm9HYV9TV+EV3K7XGIhCZR68YrOyDYXKJXiFZuUl+qEQ0Vz2L7xCs7QJhcgFeAVm7Qly77GnIEbPXMs65BqNeb3CYrmN3DIIH+EVFtN05BJ1Il5BsR1DLml1vtsufasGI2k0jPSKSWUzkuYQvEJS0TZN0jyHV0gqPzECSTINXhGpbUCSbIdXQGqnkSSphpL16GeVJI/hFZCaJiza2YiaAQgX1z/gBK6Zv6UyF1EzCvaG2g+ahJ6chL0e2ypEzUTYGz6EzTLY67GtR9SMhb1h2HFo8dxej201okYzJLu68Rk2Q/ALtqiYFiF6tIpobxru6WrL016PaTSi5yLsTbfCRgN7ez2WN0iSHbA3DlchtLr4CPYzMejcSJKMQbiONRs2ej/qlWU/k7XorySbcJfhJsKsQaxGv0PSdWr1jmERWxBmIV4g/Gy7diF5wt0GnZ+cjzB6lXWj0dM89TxDLntN4/EJthiNq71GK2p4u+tgGgMsRW5Zi3Cb5StqTc7DHr5ZB5F7dsMr7jLCQYmODnufbcQ5FOYM1154G2r6mxquVRKtUITXG3Ue/VGoaObyBV7BrdLcex8KezpvMrSE6hXfLE099VorRVZCQ06vIfU8hd7phdkAbybqtPbjFmodZ9J08j6OYAEq8y8B2syegDlYAp0L0f5yKZ9kJ510kke6uv4DiVS+AZQJNRAAAAAASUVORK5CYII=">
+  </div>
+</div>
+</body>
+</html>
+

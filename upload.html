@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zxx" class="js">
+<head>
+	<meta charset="utf-8">
+	<meta name="author" content="Rob_GCC">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<!-- Fav Icon  -->
+	<link rel="shortcut icon" href="images/favicon.png">
+	<!-- Site Title  -->
+	<title>Blockjournal</title>
+	<!-- Bundle and Base CSS -->
+	<link rel="stylesheet" href="assets/css/vendor.bundle.css?ver=150">
+	<link rel="stylesheet" href="assets/css/style.css?ver=150">
+	<!-- Color Scheme CSS -->
+	<link rel="stylesheet" href="assets/css/theme.css?ver=150" id="theming">
+    <script src="https://www.moneybutton.com/moneybutton.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/bsv@0.21.5/bsv.min.js"></script>
+
+     
+	
+</head>
+ 
+<body class="nk-body body-wider bg-light-alt">
+	<div class="nk-wrap">
+		<header class="nk-header page-header is-transparent is-sticky is-shrink" id="header">
+		    <!-- Header @s -->
+			<header class="nk-header page-header is-transparent is-sticky is-shrink" id="header">
+            <!-- Header @s -->
+            <div class="header-main">
+                <div class="header-container container">
+                    <div class="header-wrap">
+                        <!-- Logo @s -->
+                        <div class="header-logo logo animated" data-animate="fadeInDown" data-delay=".6">
+                            <a href="./" class="logo-link">
+                                <h2 style="color: rgba(255,255,255,0.9)"> Blockjournal </h2>
+                            </a>
+                        </div>
+
+                        <!-- Menu Toogle @s -->
+                        <div class="header-nav-toggle">
+                            <a href="#" class="navbar-toggle" data-menu-toggle="header-menu">
+                                <div class="toggle-line">
+                                    <span></span>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Menu @s -->
+                        <div class="header-navbar animated" data-animate="fadeInDown" data-delay=".75">
+                            <nav class="header-menu" id="header-menu">
+                                <ul class="menu">
+                                    <li class="menu-item"><a class="menu-link nav-link" href="./index.html">Home</a></li>
+                                    <li class="menu-item"><a class="menu-link nav-link" href="./articles.html">Articles</a></li>
+                                    <li class="menu-item"><a class="menu-link nav-link" href="./upload.html">Upload</a></li>
+                                </ul>
+                                <ul class="menu-btns">
+                                    <li><a href="#" data-toggle="modal" data-target="#login-popup" class="btn btn-md btn-auto btn-grad"><span>BSV</span></a></li>
+                                </ul>
+                            </nav>
+                        </div><!-- .header-navbar @e -->
+                    </div>                                                
+                </div>
+            </div><!-- .header-main @e -->
+
+			<!-- Banner @s -->
+			<div class="header-banner bg-theme-grad">
+				<div class="nk-banner">
+				    <div class="banner banner-page">
+				        <div class="banner-wrap">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-xl-6 col-lg-9">
+                                        <div class="banner-caption cpn tc-light text-center">
+                                            <div class="cpn-head">
+                                                <p>Publish and share your own unique story with the world. Please mind our policy policies - the blockchain keeps all evidence on chain.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+				    </div>
+				</div><!-- .nk-banner -->
+				<div class="nk-ovm shape-a-sm"></div>
+			</div>
+			<!-- .header-banner @e -->
+		</header>
+
+        <main class="nk-pages">
+            <section class="section section-l bg-white">
+                <div class="container">
+                    <h3 class="title title-md">Publishing Form</h3>
+                       <div class="field-item">
+                            <label class="field-label">Author</label>
+                            <div class="field-wrap">
+                                <input name="whichThing"  type="text" class="input-bordered" id="author" required>
+                            </div>
+                        </div>
+                        <div class="field-item">
+                                <label class="field-label">Signature</label>
+                                <div class="field-wrap">
+                                    <input name="whichThing"  type="text" class="input-bordered" id="signature" required>
+                                </div>
+                            </div>
+
+                            <div class="field-item">
+                                    <label class="field-label">Title</label>
+                                    <div class="field-wrap">
+                                        <input name="whichThing"  type="text" class="input-bordered" id="title" required>
+                                    </div>
+                                </div>
+
+                                <div class="field-item">
+                                        <label class="field-label">Abstract</label>
+                                        <div class="field-wrap">
+                                            <input name="whichThing"  type="text" class="input-bordered" id="abstract" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="field-item">
+                                            <label class="field-label">Full Text</label>
+                                            <div class="field-wrap">
+                                                <input name="whichThing"  type="text" class="input-bordered" id="fullText" required>
+                                            </div>
+                                        </div>
+                                      
+                                        <div class="field-item">
+                                                <label class="field-label">Genre</label>
+                                                <div class="field-wrap">
+                                                    <input name="whichThing"  type="text" class="input-bordered" id="genre" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="field-item">
+                                                    <label class="field-label">License</label>
+                                                    <div class="field-wrap">
+                                                        <input name="whichThing"  type="text" class="input-bordered" id="license" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="field-item">
+                                                        <label class="field-label">Location</label>
+                                                        <div class="field-wrap">
+                                                            <input name="whichThing"  type="text" class="input-bordered" id="location" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="field-item">
+                                                            <label class="field-label">Fee</label>
+                                                            <div class="field-wrap">
+                                                                <input name="whichThing"  type="text" class="input-bordered" id="fee" required>
+                                                            </div>
+                                                        </div>
+                       
+                        <button class="btn btn-grad">upload</button>
+                        <div id='my-money-button'></div>
+
+
+
+></div>
+
+
+                </div>
+            </section>
+
+        </main>
+    
+		
+	</div>
+
+	<div class="preloader"><span class="spinner spinner-round"></span></div>
+	
+	<!-- JavaScript -->
+	<script src="assets/js/jquery.bundle.js?ver=150"></script>
+	<script src="assets/js/scripts.js?ver=150"></script>
+    <script src="assets/js/charts.js"></script>
+    <script>
+    function getFormID() {
+        var author = document.getElementById("author").value;
+        var signature = document.getElementById("signature").value;
+        var title = document.getElementById("title").value;
+        var abstract = document.getElementById("abstract").value;
+        var fullText = document.getElementById("fullText").value;
+        var genre = document.getElementById("genre").value;
+        var license = document.getElementById("license").value;
+        var location = document.getElementById("location").value;
+        var fee = document.getElementById("fee").value;
+
+
+      }
+       
+  const div = document.getElementById('my-money-button')
+  hex1 = ["Robert Green", "2398492KASK923ajsk", "Climate debate in the 21th century", "We are on the edge of a global climate change that might change the fate of future generations", "Culture", "none", "africa", "none" ];
+
+    let hex = 'OP_RETURN';
+        for(i in hex1){
+        hex += ' '  + bsv.Script.buildDataOut(hex1[i]).toASM().split(" ")[1];
+    }
+
+  moneyButton.render(div, {
+    outputs: [{
+      type: 'SCRIPT',
+      script: hex,
+      amount: '0.2',
+      currency: 'USD'
+    }]
+  })
+  console.log(hex);
+    
+
+    </script>
+    
+</body>
+</html>
